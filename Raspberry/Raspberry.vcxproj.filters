@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Libraries">
+      <UniqueIdentifier>{7ac70ac1-ee89-4799-a62c-413d6a1adfcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\GPIOLibrary">
+      <UniqueIdentifier>{b995dd54-0019-496f-adb6-ca5d8b88e78f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\GPIOLibrary\GPIO">
+      <UniqueIdentifier>{8373168d-f75e-45ab-8739-e5a87df53d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\GPIOLibrary\I2C">
+      <UniqueIdentifier>{797f81ae-6321-4f16-a84a-12a9642947f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{e3ab751c-e9dd-477d-883c-4765eac78b87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Devices">
+      <UniqueIdentifier>{48742e3f-22f2-4714-acd3-2da7d2e778b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Controllers">
+      <UniqueIdentifier>{625da114-5649-4b3f-b0ae-be453c62bcf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Sensors">
+      <UniqueIdentifier>{d91e5bac-cace-483d-987d-1b51eca7e7ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Libraries\PwmController">
+      <UniqueIdentifier>{7a291155-eae5-43c0-8d51-0d5005f637ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Utilities">
+      <UniqueIdentifier>{1655b1ef-372f-4d80-b977-2f4b7ea560cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Sensors\OrientationSensor">
+      <UniqueIdentifier>{a83e0daa-4491-441f-a57a-6f6844f8f9bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GPIOPin.h">
+      <Filter>Libraries\GPIOLibrary\GPIO</Filter>
+    </ClInclude>
+    <ClInclude Include="GPIOPinEnum.h">
+      <Filter>Libraries\GPIOLibrary\GPIO</Filter>
+    </ClInclude>
+    <ClInclude Include="PwmController.h">
+      <Filter>Libraries\PwmController</Filter>
+    </ClInclude>
+    <ClInclude Include="I2C.h">
+      <Filter>Libraries\GPIOLibrary\I2C</Filter>
+    </ClInclude>
+    <ClInclude Include="Orientation.h">
+      <Filter>Source\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="OrientationSensor.h">
+      <Filter>Source\Sensors\OrientationSensor</Filter>
+    </ClInclude>
+    <ClInclude Include="OrientationSensorEnums.h">
+      <Filter>Source\Sensors\OrientationSensor</Filter>
+    </ClInclude>
+    <ClInclude Include="MotorController.h">
+      <Filter>Source\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Motor.h">
+      <Filter>Source\Devices</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GPIOPin.cpp">
+      <Filter>Libraries\GPIOLibrary\GPIO</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="PwmController.cpp">
+      <Filter>Libraries\PwmController</Filter>
+    </ClCompile>
+    <ClCompile Include="I2C.cpp">
+      <Filter>Libraries\GPIOLibrary\I2C</Filter>
+    </ClCompile>
+    <ClCompile Include="Orientation.cpp">
+      <Filter>Source\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="OrientationSensor.cpp">
+      <Filter>Source\Sensors\OrientationSensor</Filter>
+    </ClCompile>
+    <ClCompile Include="MotorController.cpp">
+      <Filter>Source\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="Motor.cpp">
+      <Filter>Source\Devices</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
