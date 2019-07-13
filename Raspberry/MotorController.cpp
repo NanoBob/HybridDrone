@@ -2,6 +2,18 @@
 #include <iostream>
 
 
+MotorController::MotorController(int address)
+{
+	pwm = new PwmController(address);
+
+	init();
+}
+
+MotorController::~MotorController()
+{
+	delete this->pwm;
+}
+
 double MotorController::limitThrust(double thrust, double limit)
 {
 	return thrust > limit ? limit :
@@ -15,18 +27,6 @@ void MotorController::updateMotors()
 	frontRight->run(throttlePower + pitchPower - rollPower - yawPower);
 	rearLeft->run(throttlePower - pitchPower + rollPower - yawPower);
 	rearRight->run(throttlePower - pitchPower - rollPower + yawPower);
-}
-
-MotorController::MotorController(int address)
-{
-	pwm = new PwmController(address);
-
-	init();
-}
-
-MotorController::~MotorController()
-{
-	delete this->pwm;
 }
 
 void MotorController::shutdown()
@@ -52,19 +52,17 @@ void MotorController::init()
 void MotorController::arm()
 {
 	stopAllMotors();
-
 	usleep(4 * 1000 * 1000);
 
 	this->runAllMotors(1);
-	std::cout << "Please reconnect the power\n";
 	usleep(4 * 1000 * 1000);
 
+	std::cout << "Running 0%\n";
 	this->runAllMotors(0);
-	std::cout << "Running 0\n";
 	usleep(4 * 1000 * 1000);
 
+	std::cout << "Running 5%\n";
 	this->runAllMotors(0.05);
-	std::cout << "Punning 5%\n";
 	usleep(5 * 1000 * 1000);
 
 	std::cout << "Arming finished\n";

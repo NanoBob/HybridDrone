@@ -79,46 +79,47 @@ int16_t convert8to16bit(uint8_t lsb, uint8_t msb) {
 
 Orientation OrientationSensor::getOrientation()
 {
-	//auto bytes = i2c->readLength((int)OrientationSensorRegisters::BNO055_EULER_H_LSB_ADDR, 6);
+	unsigned char bytes[6] = { 0 };
+	i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_H_LSB_ADDR, bytes, 6);
 
 	//for (auto byte : bytes) {
 	//	printf("%02x ", byte);
 	//}
 
-	//auto yaw = convert8to16bit(bytes[0], bytes[1]);
-	//auto pitch = convert8to16bit(bytes[2], bytes[3]);
-	//auto roll = convert8to16bit(bytes[4], bytes[5]);
+	auto yaw = convert8to16bit(bytes[0], bytes[1]);
+	auto pitch = convert8to16bit(bytes[2], bytes[3]);
+	auto roll = convert8to16bit(bytes[4], bytes[5]);
 
-	uint8_t yawLSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_H_LSB_ADDR);
-	uint8_t yawMSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_H_MSB_ADDR);
+	//uint8_t yawLSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_H_LSB_ADDR);
+	//uint8_t yawMSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_H_MSB_ADDR);
 
-	uint8_t pitchLSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_P_LSB_ADDR);
-	uint8_t pitchMSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_P_MSB_ADDR);
+	//uint8_t pitchLSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_P_LSB_ADDR);
+	//uint8_t pitchMSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_P_MSB_ADDR);
 
-	uint8_t rollLSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_R_LSB_ADDR);
-	uint8_t rollMSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_R_MSB_ADDR);
+	//uint8_t rollLSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_R_LSB_ADDR);
+	//uint8_t rollMSB = i2c->readAddress((int)OrientationSensorRegisters::BNO055_EULER_R_MSB_ADDR);
 
-	int16_t yaw = convert8to16bit(yawLSB, yawMSB);
-	int16_t pitch = convert8to16bit(pitchLSB, pitchMSB);
-	int16_t roll = convert8to16bit(rollLSB, rollMSB);
+	//int16_t yaw = convert8to16bit(yawLSB, yawMSB);
+	//int16_t pitch = convert8to16bit(pitchLSB, pitchMSB);
+	//int16_t roll = convert8to16bit(rollLSB, rollMSB);
 
-	yaw = (yaw > 180 * 16 ? convert8to16bit(yawLSB, yawMSB - 0x80) : yaw < -180 * 16 ? convert8to16bit(yawLSB, yawMSB - 0x80) : yaw) % (360 * 16);
-	roll = (roll > 180 * 16 ? convert8to16bit(rollLSB, rollMSB - 0x80) : roll < -180 * 16 ? convert8to16bit(rollLSB, rollMSB - 0x80) : roll) % (360 * 16);
+	//yaw = (yaw > 180 * 16 ? convert8to16bit(yawLSB, yawMSB - 0x80) : yaw < -180 * 16 ? convert8to16bit(yawLSB, yawMSB - 0x80) : yaw) % (360 * 16);
+	//roll = (roll > 180 * 16 ? convert8to16bit(rollLSB, rollMSB - 0x80) : roll < -180 * 16 ? convert8to16bit(rollLSB, rollMSB - 0x80) : roll) % (360 * 16);
 
-	printf("\n%02x ", yawMSB);
-	printf("%02x\t\t", yawLSB);
-	printf("%02x: ", yaw);
-	std::cout << yaw << "\n";
+	//printf("\n%02x ", yawMSB);
+	//printf("%02x\t\t", yawLSB);
+	//printf("%02x: ", yaw);
+	//std::cout << yaw << "\n";
 
-	printf("%02x ", pitchMSB);
-	printf("%02x\t\t", pitchLSB);
-	printf("%02x: ", pitch);
-	std::cout << pitch << "\n";
+	//printf("%02x ", pitchMSB);
+	//printf("%02x\t\t", pitchLSB);
+	//printf("%02x: ", pitch);
+	//std::cout << pitch << "\n";
 
-	printf("%02x ", rollMSB);
-	printf("%02x\t\t", rollLSB);
-	printf("%02x: ", roll);
-	std::cout << roll << "\n";
+	//printf("%02x ", rollMSB);
+	//printf("%02x\t\t", rollLSB);
+	//printf("%02x: ", roll);
+	//std::cout << roll << "\n";
 
 	return Orientation(((double)yaw) / 16.0 , ((double)pitch) / 16.0, ((double)roll) / 16.0);
 }

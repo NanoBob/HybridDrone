@@ -21,17 +21,15 @@ private:
 	void openBus();
 	void acquireDevice();
 
-	int readAddress(unsigned char address, unsigned char& data);
-	int readAddress(int address, unsigned char& data);
 public:
 	I2C(int address);
 	virtual ~I2C();
 
-	uint8_t readAddress(int address);
-	std::vector<uint8_t> readLength(int address, int length);
-
-	int writeAddress(unsigned char address, unsigned char data);
-	int writeAddress(int address, unsigned char data);
+	int readAddress(int address);
+	int readAddress(int address, unsigned char* buffer, int length);
 	int writeAddress(int address, int data);
+
+	int readBytes(unsigned char* buffer, int length);
+	void writeBytes(unsigned char* bytes, int count);
 };
 

@@ -43,6 +43,7 @@
     <ApplicationTypeRevision>1.0</ApplicationTypeRevision>
     <TargetLinuxPlatform>Generic</TargetLinuxPlatform>
     <LinuxProjectType>{2238F9CD-F817-4ECC-BD14-2524D2669B35}</LinuxProjectType>
+    <ProjectName>DroneCpp</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
@@ -83,8 +84,10 @@
     <ClCompile Include="Motor.cpp" />
     <ClCompile Include="MotorController.cpp" />
     <ClCompile Include="Orientation.cpp" />
+    <ClCompile Include="OrientationController.cpp" />
     <ClCompile Include="OrientationSensor.cpp" />
     <ClCompile Include="PwmController.cpp" />
+    <ClCompile Include="wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GPIOPin.h" />
@@ -93,6 +96,7 @@
     <ClInclude Include="Motor.h" />
     <ClInclude Include="MotorController.h" />
     <ClInclude Include="Orientation.h" />
+    <ClInclude Include="OrientationController.h" />
     <ClInclude Include="OrientationSensor.h" />
     <ClInclude Include="OrientationSensorEnums.h" />
     <ClInclude Include="PwmController.h" />
@@ -101,6 +105,9 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\Bob Desktop\source\repos\Raspberry\GPIOLibrary;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <LibraryDependencies>pthread;%(LibraryDependencies)</LibraryDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>

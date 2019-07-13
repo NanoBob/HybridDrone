@@ -9,18 +9,26 @@
 #include <ios>
 #include "OrientationSensor.h"
 #include "MotorController.h"
+#include "OrientationController.h"
+
 void motorTest() {
-	MotorController controller = MotorController();
+	//MotorController controller = MotorController();
 }
 
 void orientationTest() {
-	OrientationSensor sensor = OrientationSensor(0x28);
+	MotorController motorController = MotorController();
+	OrientationController controller = OrientationController(motorController);
+	controller.start();
 
-	while (true) {
-		Orientation orientation = sensor.getOrientation();
-		std::cout << "Yaw: " << orientation.yaw << ", Pitch: " << orientation.pitch << ", Roll: " << orientation.roll << std::endl;
-		usleep(100000);
-	}
+	usleep(-1);
+
+	//OrientationSensor sensor = OrientationSensor(0x28);
+
+	//while (true) {
+	//	Orientation orientation = sensor.getOrientation();
+	//	std::cout << "Yaw: " << orientation.yaw << ", Pitch: " << orientation.pitch << ", Roll: " << orientation.roll << std::endl;
+	//	usleep(100000);
+	//}
 }
 
 void gpioTest() {

@@ -63,6 +63,9 @@
     <ClInclude Include="Motor.h">
       <Filter>Source\Devices</Filter>
     </ClInclude>
+    <ClInclude Include="OrientationController.h">
+      <Filter>Source\Controllers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GPIOPin.cpp">
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="Motor.cpp">
       <Filter>Source\Devices</Filter>
+    </ClCompile>
+    <ClCompile Include="OrientationController.cpp">
+      <Filter>Source\Controllers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
