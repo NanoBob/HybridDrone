@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-MotorController::MotorController(int address)
+MotorController::MotorController(int address): initialized(false), enabled(true)
 {
 	pwm = new PwmController(address);
 
@@ -23,22 +23,36 @@ double MotorController::limitThrust(double thrust, double limit)
 
 void MotorController::updateMotors()
 {
+	if (!enabled) {
+		return;
+	}
 	frontLeft->run(throttlePower + pitchPower + rollPower + yawPower);
 	frontRight->run(throttlePower + pitchPower - rollPower - yawPower);
 	rearLeft->run(throttlePower - pitchPower + rollPower - yawPower);
 	rearRight->run(throttlePower - pitchPower - rollPower + yawPower);
 }
 
+void MotorController::test(double value)
+{
+	for (float i = 0; i < value; i += value * .0004) {
+		runAllMotors(i);
+		usleep(25);
+	}
+	for (float i = value; i >= 0; i -= value * .0004) {
+		runAllMotors(i);
+		usleep(25);
+	}
+}
+
 void MotorController::shutdown()
 {
-	frontLeft->stop();
-	frontRight->stop();
-	rearLeft->stop();
-	rearRight->stop();
+	stopAllMotors();
 }
 
 void MotorController::init()
 {
+	enabled = true;
+
 	pwm->setDesiredFrequency(180);
 
 	frontLeft = new Motor(*pwm, 0);
@@ -47,6 +61,7 @@ void MotorController::init()
 	rearLeft = new Motor(*pwm, 12);
 
 	arm();
+	initialized = true;
 }
 
 void MotorController::arm()
@@ -79,8 +94,29 @@ void MotorController::stopAllMotors()
 
 void MotorController::runAllMotors(double value)
 {
+	if (! enabled) {
+		return;
+	}
 	frontLeft->run(value);
 	frontRight->run(value);
 	rearRight->run(value);
 	rearLeft->run(value);
+}
+
+void MotorController::disable()
+{
+	enabled = false;
+
+	frontLeft->run(0);
+	frontRight->run(0);
+	rearRight->run(0);
+	rearLeft->run(0);
+
+	std::cout << "Disabled motors\n";
+}
+
+void MotorController::enable()
+{
+	enabled = true;
+	std::cout << "Enabled motors\n";
 }

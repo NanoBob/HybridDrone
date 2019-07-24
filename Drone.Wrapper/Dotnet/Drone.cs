@@ -20,7 +20,17 @@ namespace Drone.Wrapper.Dotnet
         public Orientation TargetOrientation
         {
             get => targetOrientation;
-            set => CppWrapper.SetTargetOrientation(value.Yaw, value.Pitch, value.Roll);
+            set
+            {
+                targetOrientation = value;
+                CppWrapper.SetTargetOrientation(value.Yaw, value.Pitch, value.Roll);
+            }
+        }
+
+        public Tuple<float, float, float, float> GetMotorThrottles()
+        {
+            CppWrapper.GetMotorThrottles(out float frontLeft, out float frontRight, out float rearLeft, out float rearRight);
+            return new Tuple<float, float, float, float>(frontLeft, frontRight, rearLeft, rearRight);
         }
 
         public float MotorThrottle
@@ -28,7 +38,22 @@ namespace Drone.Wrapper.Dotnet
             set => CppWrapper.SetThrottle(value);
         }
 
+        public Drone()
+        {
 
+        }
+
+        public void Init() => CppWrapper.Init();
+
+        public void StartOrientationThread() => CppWrapper.StartOrientationThread();
+
+        public void StopOrientationThread() => CppWrapper.StopOrientationThread();
+
+        public void RunTest(float value) => CppWrapper.RunTest(value);
+
+        public void EnableMotors() => CppWrapper.EnableMotors();
+
+        public void DisableMotors() => CppWrapper.DisableMotors();
 
     }
 }

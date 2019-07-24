@@ -58,7 +58,7 @@ Orientation OrientationController::sanitizeOrientation(Orientation orientation)
 	if (rollDiff > 100) {
 		orientation.roll = this->orientation.roll;
 	}
-	std::cout << "Diff Yaw: " << yawDiff << ", Pitch: " << pitchDiff << ", Roll: " << rollDiff << "\n";
+	//std::cout << "Diff Yaw: " << yawDiff << ", Pitch: " << pitchDiff << ", Roll: " << rollDiff << "\n";
 
 	return orientation;
 }
@@ -73,9 +73,7 @@ void OrientationController::run() {
 		float pitchDiff = this->targetOrientation.pitch - this->orientation.pitch;
 		float rollDiff = this->targetOrientation.roll - this->orientation.roll;
 
-
-		std::cout << "Yaw: " << orientation.yaw << ", Pitch: " << orientation.pitch << ", Roll: " << orientation.roll << "\n";
-
+		//std::cout << "Yaw: " << orientation.yaw << ", Pitch: " << orientation.pitch << ", Roll: " << orientation.roll << "\n";
 
 		usleep(10 * 1000);
 	}

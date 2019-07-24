@@ -18,13 +18,25 @@ namespace Drone.Wrapper.Cpp
         public static extern void SetYaw(float value);
 
         [DllImport(dllName, EntryPoint = "setPitch")]
-        public static extern void setPitch(float value);
+        public static extern void SetPitch(float value);
 
         [DllImport(dllName, EntryPoint = "setRoll")]
         public static extern void SetRoll (float value);
 
         [DllImport(dllName, EntryPoint = "setThrottle")]
         public static extern void SetThrottle(float value);
+
+        [DllImport(dllName, EntryPoint = "getMotorThrottles")]
+        public static extern void GetMotorThrottles(out float frontLeft, out float frontRight, out float rearLeft, out float rearRight);
+
+        [DllImport(dllName, EntryPoint = "runTest")]
+        public static extern void RunTest(float value);
+
+        [DllImport(dllName, EntryPoint = "enableMotors")]
+        public static extern void EnableMotors();
+
+        [DllImport(dllName, EntryPoint = "disableMotors")]
+        public static extern void DisableMotors();
 
 
         // Orientation

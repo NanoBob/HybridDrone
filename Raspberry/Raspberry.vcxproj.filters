@@ -93,5 +93,6 @@
     <ClCompile Include="OrientationController.cpp">
       <Filter>Source\Controllers</Filter>
     </ClCompile>
+    <ClCompile Include="wrapper.cpp" />
   </ItemGroup>
 </Project>
