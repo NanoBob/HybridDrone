@@ -69,7 +69,7 @@ namespace Drone.Core.AuthorizationHandlers
 
         private string GenerateHash(DateTime timestamp)
         {
-            int unixTime = (Int32)(timestamp.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            int unixTime = (int)(timestamp.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             string input = unixTime.ToString();
             byte[] binaryInput = Encoding.ASCII.GetBytes(input);
 

@@ -37,19 +37,21 @@ namespace Drone.Core
                 {
                     var context = await listener.GetContextAsync();
 
-                    if (authorizationHandler != null && !authorizationHandler.IsAuthorized(context))
+                    if (context.Request.HttpMethod == "OPTIONS")
                     {
-                        context.Response.StatusCode = 401;
-                        context.Response.Close();
-                    }
-                    else if (context.Request.HttpMethod == "OPTIONS")
-                    {
-                        context.Response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With");
+                        context.Response.AddHeader("Access-Control-Allow-Headers", "*");
                         context.Response.AddHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH");
                         context.Response.AddHeader("Access-Control-Max-Age", "1728000");
                         context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                         context.Response.Close();
-                    } else
+                    }
+                    else if(authorizationHandler != null && !authorizationHandler.IsAuthorized(context))
+                    {
+                        context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+                        context.Response.StatusCode = 401;
+                        context.Response.Close();
+                    }
+                    else
                     {
                         context.Response.AppendHeader("Access-Control-Allow-Origin", "*");
 
@@ -59,7 +61,6 @@ namespace Drone.Core
                             string route = context.Request.Url.LocalPath.ToString();
                             string identifier = method.ToUpper() + route.ToLower();
 
-                            //Console.WriteLine(identifier);
                             if (actions.ContainsKey(identifier))
                             {
                                 string response;
