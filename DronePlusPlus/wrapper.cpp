@@ -64,6 +64,14 @@ extern "C" void stopOrientationThread() {
 	orientationController->stop();
 }
 
+extern "C" void startOrientationAssist() {
+	orientationController->startOrientationAssist();
+}
+
+extern "C" void stopOrientationAssist() {
+	orientationController->stopOrientationAssit();
+}
+
 extern "C" void setTargetOrientation(float yaw, float pitch, float roll) {
 	orientationController->setTargetOrientation(Orientation(yaw, pitch, roll));
 }

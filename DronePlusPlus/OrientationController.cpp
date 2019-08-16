@@ -1,14 +1,23 @@
 #include "OrientationController.h"
 #include <iostream>
 
-OrientationController::OrientationController(MotorController& motors) : isRunning(false), orientation(0, 0, 0), targetOrientation(0, 0, 0), terminateThread(false), motors(motors)
+OrientationController::OrientationController(MotorController& motors) : 
+	isRunning(false), 
+	orientation(0, 0, 0), 
+	targetOrientation(0, 0, 0), 
+	terminateSensorThread(false), 
+	motors(motors), 
+	orientationAssistAgression(1.0f/45.0f), 
+	readCount(0),
+	sensorThread(nullptr),
+	motorThread(nullptr)
 {
 	sensor = new OrientationSensor(0x28);
 }
 
 OrientationController::~OrientationController()
 {
-	terminateThread = true;
+	terminateSensorThread = true;
 	if (sensorThread != nullptr) {
 		sensorThread->join();
 		delete sensorThread;
@@ -19,13 +28,45 @@ OrientationController::~OrientationController()
 
 void OrientationController::start()
 {
+	if (sensorThread != nullptr) {
+		return;
+	}
+	terminateSensorThread = false;
 	isRunning = true;
-	sensorThread = new std::thread([this] { this->run(); });
+	sensorThread = new std::thread([this] { this->runOrientation(); });
+
 }
 
 void OrientationController::stop()
 {
+	if (sensorThread == nullptr) {
+		return;
+	}
 	isRunning = false;
+	terminateSensorThread = true;
+	sensorThread->join();
+	delete sensorThread;
+	sensorThread = nullptr;
+}
+
+void OrientationController::startOrientationAssist()
+{
+	if (motorThread != nullptr) {
+		return;
+	}
+	terminateMotorThread = false;
+	motorThread = new std::thread([this] { this->runMotors(); });
+}
+
+void OrientationController::stopOrientationAssit()
+{
+	if (motorThread == nullptr) {
+		return;
+	}
+	terminateMotorThread = true;
+	motorThread->join();
+	delete motorThread;
+	motorThread = nullptr;
 }
 
 Orientation OrientationController::getOrientation()
@@ -43,38 +84,70 @@ void OrientationController::setTargetOrientation(Orientation orientation)
 	this->orientation = orientation;
 }
 
+void OrientationController::setOrientationAssistAgression(float value)
+{
+	this->orientationAssistAgression = value;
+}
+
 Orientation OrientationController::sanitizeOrientation(Orientation orientation)
 {
-	float yawDiff = std::abs(orientation.yaw - this->orientation.yaw);
-	float pitchDiff = std::abs(orientation.pitch - this->orientation.pitch);
-	float rollDiff = std::abs(orientation.roll - this->orientation.roll);
-
-	if (yawDiff > 100) {
-		orientation.yaw = this->orientation.yaw;
+	if (orientation.yaw > 180) {
+		orientation.yaw = orientation.yaw - 360;
 	}
-	if (pitchDiff > 100) {
-		orientation.pitch = this->orientation.pitch;
+	if (orientation.pitch > 180) {
+		orientation.pitch = orientation.pitch - 360;
 	}
-	if (rollDiff > 100) {
-		orientation.roll = this->orientation.roll;
+	if (orientation.roll > 180) {
+		orientation.roll = orientation.roll - 360;
 	}
-	//std::cout << "Diff Yaw: " << yawDiff << ", Pitch: " << pitchDiff << ", Roll: " << rollDiff << "\n";
 
 	return orientation;
 }
 
-void OrientationController::run() {
-	while (!terminateThread) {
+void OrientationController::runOrientation() {
+	while (!terminateSensorThread) {
 		Orientation orientation = sensor->getOrientation();
 
-		this->orientation = sanitizeOrientation(orientation);
-
-		float yawDiff = this->targetOrientation.yaw - this->orientation.yaw;
-		float pitchDiff = this->targetOrientation.pitch - this->orientation.pitch;
-		float rollDiff = this->targetOrientation.roll - this->orientation.roll;
-
-		//std::cout << "Yaw: " << orientation.yaw << ", Pitch: " << orientation.pitch << ", Roll: " << orientation.roll << "\n";
+		this->orientation =  sanitizeOrientation(orientation);
+		this->readCount = (this->readCount + 1) % 1024;
 
 		usleep(10 * 1000);
+	}
+}
+
+void OrientationController::runMotors()
+{
+	int currentReadCount = this->readCount;
+	while (!terminateMotorThread) {
+		while (this->readCount == currentReadCount) {
+			usleep(100);
+		}
+		this->performStabilityAssist();
+	}
+}
+
+void OrientationController::performStabilityAssist()
+{
+	Orientation orientation = this->orientation;
+	Orientation targetOrientation = this->targetOrientation;
+
+	//handleAxisOffset(Axis::Yaw, targetOrientation.yaw - orientation.yaw);
+	handleAxisOffset(Axis::Pitch, targetOrientation.pitch - orientation.pitch);
+	handleAxisOffset(Axis::Roll, targetOrientation.roll - orientation.roll);
+
+	this->motors.updateMotors();
+}
+
+void OrientationController::handleAxisOffset(Axis axis, float offset)
+{
+	float targetPower = 0.1 * std::min(this->orientationAssistAgression * offset, 1.0f);
+
+	switch (axis) {
+	case Axis::Yaw:
+		this->motors.yaw(std::min(targetPower, 0.1f));
+	case Axis::Pitch:
+		this->motors.pitch(- targetPower);
+	case Axis::Roll:
+		this->motors.roll(- targetPower);
 	}
 }

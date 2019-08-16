@@ -49,6 +49,10 @@ namespace Drone.Wrapper.Dotnet
 
         public void StopOrientationThread() => CppWrapper.StopOrientationThread();
 
+        public void StartOrientationAssist() => CppWrapper.StartOrientationAssist();
+
+        public void StopOrientationAssist() => CppWrapper.StopOrientationAssist();
+
         public void RunTest(float value) => CppWrapper.RunTest(value);
 
         public void EnableMotors() => CppWrapper.EnableMotors();

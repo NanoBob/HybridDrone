@@ -2,7 +2,7 @@
 #include <iostream>
 
 
-MotorController::MotorController(int address): initialized(false), enabled(true)
+MotorController::MotorController(int address): initialized(false), enabled(true), throttlePower(0), yawPower(0), pitchPower(0), rollPower(0)
 {
 	pwm = new PwmController(address);
 
@@ -16,9 +16,10 @@ MotorController::~MotorController()
 
 double MotorController::limitThrust(double thrust, double limit)
 {
-	return thrust > limit ? limit :
-		thrust < -limit ? -limit :
-		thrust;
+	if (thrust < 0) {
+		return std::max(thrust, -limit);
+	}
+	return std::min(thrust, limit);
 }
 
 void MotorController::updateMotors()
@@ -26,6 +27,7 @@ void MotorController::updateMotors()
 	if (!enabled) {
 		return;
 	}
+
 	frontLeft->run(throttlePower + pitchPower + rollPower + yawPower);
 	frontRight->run(throttlePower + pitchPower - rollPower - yawPower);
 	rearLeft->run(throttlePower - pitchPower + rollPower - yawPower);

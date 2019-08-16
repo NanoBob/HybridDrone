@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cd C:\code\c++\CppDrone\DroneCore\bin\Debug\ &amp;&amp; scp -r netcoreapp2.2 pi@raspberrypi:/home/pi/dronecore" />
+    <Exec Command="cd C:\code\c++\HybridDrone\DroneCore\bin\Debug\ &amp;&amp; scp -r netcoreapp2.2 pi@raspberrypi:/home/pi/dronecore" />
   </Target>
 
 </Project>

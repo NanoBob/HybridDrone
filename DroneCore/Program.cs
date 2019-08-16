@@ -19,17 +19,23 @@ namespace Drone.Core
 
         public Program()
         {
-            this.drone = new Wrapper.Dotnet.Drone();
+            try
+            {
+                this.drone = new Wrapper.Dotnet.Drone();
 
-            webserver = new WebServer("http", "*", 6606);
+                webserver = new WebServer("http", "*", 6606);
 
-            AddActions();
+                AddActions();
 
-            drone.Init();
-            drone.StartOrientationThread();
+                drone.Init();
+                drone.StartOrientationThread();
 
-            webserver.AddAuthorizationMethod(new TimeBasedHmacAuthorizationHandler("mySecret", new TimeSpan(0, 0, 3), 1));
-            webserver.Start();
+                webserver.AddAuthorizationMethod(new TimeBasedHmacAuthorizationHandler("mySecret", new TimeSpan(0, 0, 3), 1));
+                webserver.Start();
+            } catch (Exception exception)
+            {
+                Console.WriteLine($"{exception.Message}\n{exception.StackTrace}");
+            }
         }
 
         private void AddActions()

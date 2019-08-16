@@ -3,6 +3,12 @@
 #include <thread>
 #include "OrientationSensor.h"
 #include "MotorController.h"
+
+
+enum class Axis {
+	Yaw, Pitch, Roll
+};
+
 class OrientationController
 {
 private:
@@ -14,12 +20,21 @@ private:
 	Orientation targetOrientation;
 
 	bool isRunning;
-	bool terminateThread;
+	float orientationAssistAgression;
+	int readCount;
+
+	bool terminateSensorThread;
 	std::thread* sensorThread;
 
+	bool terminateMotorThread;
+	std::thread* motorThread;
 
 	Orientation sanitizeOrientation(Orientation orientation);
-	void run();
+	void runOrientation();
+	void runMotors();
+
+	void performStabilityAssist();
+	void handleAxisOffset(Axis axis, float offset);
 public:
 	OrientationController(MotorController& motors);
 	~OrientationController();
@@ -27,8 +42,12 @@ public:
 	void start();
 	void stop();
 
+	void startOrientationAssist();
+	void stopOrientationAssit();
+
 	Orientation getOrientation();
 	Orientation getTargetOrientation();
 	void setTargetOrientation(Orientation orientation);
+	void setOrientationAssistAgression(float value);
 
 };

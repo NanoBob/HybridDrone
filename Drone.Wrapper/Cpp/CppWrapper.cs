@@ -47,6 +47,12 @@ namespace Drone.Wrapper.Cpp
         [DllImport(dllName, EntryPoint = "stopOrientationThread")]
         public static extern void StopOrientationThread();
 
+        [DllImport(dllName, EntryPoint = "startOrientationAssist")]
+        public static extern void StartOrientationAssist();
+
+        [DllImport(dllName, EntryPoint = "stopOrientationAssist")]
+        public static extern void StopOrientationAssist();
+
         [DllImport(dllName, EntryPoint = "setTargetOrientation")]
         public static extern void SetTargetOrientation(float yaw, float pitch, float roll);
 
