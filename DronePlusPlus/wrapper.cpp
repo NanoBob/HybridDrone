@@ -6,11 +6,14 @@
 
 #include "MotorController.h"
 #include "OrientationController.h"
+#include "GpsController.h"
 
 MotorController* motorController;
 OrientationController* orientationController;
+GpsController* gpsController;
 
 extern "C" void init() {
+	gpsController = new GpsController();
 	motorController = new MotorController();
 	orientationController = new OrientationController(*motorController);
 }
@@ -72,6 +75,10 @@ extern "C" void stopOrientationAssist() {
 	orientationController->stopOrientationAssit();
 }
 
+extern "C" void setOrientationAssistAgression(float value) {
+	orientationController->setOrientationAssistAgression(value);
+}
+
 extern "C" void setTargetOrientation(float yaw, float pitch, float roll) {
 	orientationController->setTargetOrientation(Orientation(yaw, pitch, roll));
 }
@@ -82,4 +89,20 @@ extern "C" void getOrientation(float& yaw, float& pitch, float& roll) {
 	yaw = orientation.yaw;
 	pitch = orientation.pitch;
 	roll = orientation.roll;
+}
+
+// gps
+extern "C" void startGpsThread() {
+	gpsController->start();
+}
+
+extern "C" void stopGpsThread() {
+	gpsController->stop();
+}
+
+extern "C" void getPosition(float& longitude, float& latitude) {
+	auto position = gpsController->getPosition();
+
+	longitude = position.longitude;
+	latitude = position.latitude;
 }

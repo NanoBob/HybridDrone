@@ -27,6 +27,15 @@ namespace Drone.Wrapper.Dotnet
             }
         }
 
+        public Position Position
+        {
+            get
+            {
+                CppWrapper.GetPosition(out float longitude, out float latitude);
+                return new Position(longitude, latitude);
+            }
+        }
+
         public Tuple<float, float, float, float> GetMotorThrottles()
         {
             CppWrapper.GetMotorThrottles(out float frontLeft, out float frontRight, out float rearLeft, out float rearRight);
@@ -36,6 +45,11 @@ namespace Drone.Wrapper.Dotnet
         public float MotorThrottle
         {
             set => CppWrapper.SetThrottle(value);
+        }
+
+        public float OrientationAssistAgression
+        {
+            set => CppWrapper.SetOrientationAssistAgression(value);
         }
 
         public Drone()
@@ -52,6 +66,10 @@ namespace Drone.Wrapper.Dotnet
         public void StartOrientationAssist() => CppWrapper.StartOrientationAssist();
 
         public void StopOrientationAssist() => CppWrapper.StopOrientationAssist();
+
+        public void StartGps() => CppWrapper.StartGpsThread();
+
+        public void StopGps() => CppWrapper.StopGpsThread();
 
         public void RunTest(float value) => CppWrapper.RunTest(value);
 

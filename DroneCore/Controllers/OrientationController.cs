@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Drone.Core.Interfaces;
 using Drone.Wrapper.Dotnet;
+using Newtonsoft.Json;
 
 namespace Drone.Core.Controllers
 {
@@ -54,6 +56,24 @@ namespace Drone.Core.Controllers
                 return new
                 {
                     message = "Orientation assist disabled"
+                };
+            });
+
+            webserver.AddAction("POST", "/orientationAssistAgression", (context) =>
+            {
+
+                string input;
+                using (StreamReader reader = new StreamReader(context.Request.InputStream))
+                {
+                    input = reader.ReadToEnd();
+                }
+
+                float value = JsonConvert.DeserializeObject<RunTestStruct>(input).Value;
+
+                drone.OrientationAssistAgression = value;
+                return new
+                {
+                    message = "Orientation assist aggression set"
                 };
             });
         }

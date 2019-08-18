@@ -37,11 +37,11 @@ void MotorController::updateMotors()
 void MotorController::test(double value)
 {
 	for (float i = 0; i < value; i += value * .0004) {
-		runAllMotors(i);
+		this->throttle(i);
 		usleep(25);
 	}
 	for (float i = value; i >= 0; i -= value * .0004) {
-		runAllMotors(i);
+		this->throttle(i);
 		usleep(25);
 	}
 }

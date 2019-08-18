@@ -53,14 +53,26 @@ namespace Drone.Wrapper.Cpp
         [DllImport(dllName, EntryPoint = "stopOrientationAssist")]
         public static extern void StopOrientationAssist();
 
+        [DllImport(dllName, EntryPoint = "setOrientationAssistAgression")]
+        public static extern void SetOrientationAssistAgression(float value);
+
         [DllImport(dllName, EntryPoint = "setTargetOrientation")]
         public static extern void SetTargetOrientation(float yaw, float pitch, float roll);
 
         [DllImport(dllName, EntryPoint = "getOrientation")]
         public static extern void GetOrientation(out float yaw, out float pitch, out float roll);
 
+        // gps
 
 
+        [DllImport(dllName, EntryPoint = "startGpsThread")]
+        public static extern void StartGpsThread();
+
+        [DllImport(dllName, EntryPoint = "stopGpsThread")]
+        public static extern void StopGpsThread();
+
+        [DllImport(dllName, EntryPoint = "getPosition")]
+        public static extern void GetPosition(out float longitude, out float latitude);
     }
 
 }

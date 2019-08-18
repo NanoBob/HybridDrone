@@ -82,7 +82,10 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" />
   <ItemGroup>
+    <ClCompile Include="Gps.cpp" />
     <ClCompile Include="GPIOPin.cpp" />
+    <ClCompile Include="GpsController.cpp" />
+    <ClCompile Include="GpsSensor.cpp" />
     <ClCompile Include="I2C.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Motor.cpp" />
@@ -90,12 +93,17 @@
     <ClCompile Include="Orientation.cpp" />
     <ClCompile Include="OrientationController.cpp" />
     <ClCompile Include="OrientationSensor.cpp" />
+    <ClCompile Include="Position.cpp" />
     <ClCompile Include="PwmController.cpp" />
+    <ClCompile Include="Uart.cpp" />
     <ClCompile Include="wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Gps.h" />
     <ClInclude Include="GPIOPin.h" />
     <ClInclude Include="GPIOPinEnum.h" />
+    <ClInclude Include="GpsController.h" />
+    <ClInclude Include="GpsSensor.h" />
     <ClInclude Include="I2C.h" />
     <ClInclude Include="Motor.h" />
     <ClInclude Include="MotorController.h" />
@@ -103,7 +111,10 @@
     <ClInclude Include="OrientationController.h" />
     <ClInclude Include="OrientationSensor.h" />
     <ClInclude Include="OrientationSensorEnums.h" />
+    <ClInclude Include="Position.h" />
     <ClInclude Include="PwmController.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Uart.h" />
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
