@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 MotorController::MotorController(int address) :
-	pwm(address),
+	pwm(std::make_shared<PwmController>(address)),
 	enabled(true),
 	throttlePower(0),
 	yawPower(0),
@@ -15,7 +15,7 @@ MotorController::MotorController(int address) :
 	rearLeft(pwm, 12),
 	rearRight(pwm, 8)
 {
-	pwm.setDesiredFrequency(180);
+	pwm->setDesiredFrequency(180);
 
 	arm();
 }

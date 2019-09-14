@@ -1,11 +1,14 @@
 #pragma once
+
 #include "PwmController.h"
 #include "Motor.h"
+
+#include <memory>
 
 class MotorController
 {
 	int address;
-	PwmController pwm;
+	std::shared_ptr<PwmController> pwm;
 
 	void arm();
 
