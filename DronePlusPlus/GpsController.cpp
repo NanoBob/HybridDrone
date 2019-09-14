@@ -1,27 +1,28 @@
 #include "GpsController.h"
 
-GpsController::GpsController(): position(Position(0, 0)), sensorThread(nullptr), terminateSensorThread(false)
+GpsController::GpsController():
+	position(Position(0, 0)),
+	terminateSensorThread(false)
 {
 }
 
 void GpsController::start()
 {
-	if (sensorThread != nullptr) {
+	if (sensorThread) {
 		return;
 	}
 	terminateSensorThread = false;
-	sensorThread = new std::thread([this] { this->runSensor(); });
+	sensorThread.reset(new std::thread([this] { this->runSensor(); }));
 }
 
 void GpsController::stop()
 {
-	if (sensorThread == nullptr) {
+	if (!sensorThread) {
 		return;
 	}
 	terminateSensorThread = true;
 	sensorThread->join();
-	delete sensorThread;
-	sensorThread = nullptr;
+	sensorThread.reset();
 }
 
 Position GpsController::getPosition()
