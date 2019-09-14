@@ -3,19 +3,20 @@
 
 #include <chrono>
 #include <thread>
+#include <memory>
 
 #include "MotorController.h"
 #include "OrientationController.h"
 #include "GpsController.h"
 
-MotorController* motorController;
+std::shared_ptr<MotorController> motorController;
 OrientationController* orientationController;
 GpsController* gpsController;
 
 extern "C" void init() {
 	gpsController = new GpsController();
-	motorController = new MotorController();
-	orientationController = new OrientationController(*motorController);
+	motorController = std::make_shared<MotorController>();
+	orientationController = new OrientationController(motorController);
 }
 
 // motors

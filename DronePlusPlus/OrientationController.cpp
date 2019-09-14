@@ -3,7 +3,7 @@
 #include <iostream>
 #include <unistd.h>
 
-OrientationController::OrientationController(MotorController& motors) : 
+OrientationController::OrientationController(std::shared_ptr<MotorController> motors) :
 	isRunning(false), 
 	sensor(0x28),
 	orientation(0, 0, 0), 
@@ -135,7 +135,7 @@ void OrientationController::performStabilityAssist()
 	handleAxisOffset(Axis::Pitch, targetOrientation.pitch - orientation.pitch);
 	handleAxisOffset(Axis::Roll, targetOrientation.roll - orientation.roll);
 
-	this->motors.updateMotors();
+	this->motors->updateMotors();
 }
 
 void OrientationController::handleAxisOffset(Axis axis, float offset)
@@ -144,10 +144,10 @@ void OrientationController::handleAxisOffset(Axis axis, float offset)
 
 	switch (axis) {
 	case Axis::Yaw:
-		this->motors.yaw(std::min(targetPower, 0.1f));
+		this->motors->yaw(std::min(targetPower, 0.1f));
 	case Axis::Pitch:
-		this->motors.pitch(- targetPower);
+		this->motors->pitch(- targetPower);
 	case Axis::Roll:
-		this->motors.roll(- targetPower);
+		this->motors->roll(- targetPower);
 	}
 }

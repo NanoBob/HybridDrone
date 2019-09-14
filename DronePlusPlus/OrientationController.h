@@ -1,9 +1,11 @@
 #pragma once
+
 #include "Orientation.h"
-#include <thread>
 #include "OrientationSensor.h"
 #include "MotorController.h"
 
+#include <thread>
+#include <memory>
 
 enum class Axis {
 	Yaw, Pitch, Roll
@@ -14,7 +16,7 @@ class OrientationController
 private:
 
 	OrientationSensor sensor;
-	MotorController& motors;
+	std::shared_ptr<MotorController> motors;
 
 	Orientation orientation;
 	Orientation targetOrientation;
@@ -36,7 +38,7 @@ private:
 	void performStabilityAssist();
 	void handleAxisOffset(Axis axis, float offset);
 public:
-	OrientationController(MotorController& motors);
+	OrientationController(std::shared_ptr<MotorController> motors);
 	~OrientationController();
 
 	void start();
