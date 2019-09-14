@@ -38,10 +38,10 @@ extern "C" void setThrottle(float value) {
 
 extern "C" void getMotorThrottles(float& frontLeft, float& frontRight, float& rearLeft, float& rearRight) {
 	if (motorController != nullptr) {
-		frontLeft = motorController->frontLeft->getSpeed();
-		frontRight = motorController->frontRight->getSpeed();
-		rearLeft = motorController->rearLeft->getSpeed();
-		rearRight = motorController->rearRight->getSpeed();
+		frontLeft = motorController->frontLeft.getSpeed();
+		frontRight = motorController->frontRight.getSpeed();
+		rearLeft = motorController->rearLeft.getSpeed();
+		rearRight = motorController->rearRight.getSpeed();
 	}
 }
 

@@ -23,10 +23,10 @@ class MotorController
 public:
 	MotorController(int address = 0x40);
 
-	Motor* frontLeft;
-	Motor* frontRight;
-	Motor* rearLeft;
-	Motor* rearRight;
+	Motor frontLeft;
+	Motor frontRight;
+	Motor rearLeft;
+	Motor rearRight;
 
 	void yaw(double value) { yawPower = limitThrust(value, 0.3); }
 	void pitch(double value) { pitchPower = limitThrust(value, 0.3); }
