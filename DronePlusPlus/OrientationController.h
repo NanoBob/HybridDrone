@@ -13,7 +13,7 @@ class OrientationController
 {
 private:
 
-	OrientationSensor* sensor;
+	OrientationSensor sensor;
 	MotorController& motors;
 
 	Orientation orientation;

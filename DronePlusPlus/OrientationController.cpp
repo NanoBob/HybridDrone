@@ -5,6 +5,7 @@
 
 OrientationController::OrientationController(MotorController& motors) : 
 	isRunning(false), 
+	sensor(0x28),
 	orientation(0, 0, 0), 
 	targetOrientation(0, 0, 0), 
 	terminateSensorThread(false), 
@@ -14,7 +15,6 @@ OrientationController::OrientationController(MotorController& motors) :
 	sensorThread(nullptr),
 	motorThread(nullptr)
 {
-	sensor = new OrientationSensor(0x28);
 }
 
 OrientationController::~OrientationController()
@@ -24,8 +24,6 @@ OrientationController::~OrientationController()
 		sensorThread->join();
 		delete sensorThread;
 	}
-
-	delete sensor;
 }
 
 void OrientationController::start()
@@ -108,7 +106,7 @@ Orientation OrientationController::sanitizeOrientation(Orientation orientation)
 
 void OrientationController::runOrientation() {
 	while (!terminateSensorThread) {
-		Orientation orientation = sensor->getOrientation();
+		Orientation orientation = sensor.getOrientation();
 
 		this->orientation =  sanitizeOrientation(orientation);
 		this->readCount = (this->readCount + 1) % 1024;
