@@ -1,7 +1,9 @@
 #include "GpsSensor.h"
 #include <iostream>
 
-GpsSensor::GpsSensor()
+GpsSensor::GpsSensor() :
+	longitude(0),
+	latitude(0)
 {
 }
 
