@@ -3,16 +3,16 @@
 #include <iostream>
 #include <unistd.h>
 
-MotorController::MotorController(int address): initialized(false), enabled(true), throttlePower(0), yawPower(0), pitchPower(0), rollPower(0)
+MotorController::MotorController(int address) :
+	pwm(address),
+	initialized(false),
+	enabled(true),
+	throttlePower(0),
+	yawPower(0),
+	pitchPower(0),
+	rollPower(0)
 {
-	pwm = new PwmController(address);
-
 	init();
-}
-
-MotorController::~MotorController()
-{
-	delete this->pwm;
 }
 
 double MotorController::limitThrust(double thrust, double limit)
@@ -56,12 +56,12 @@ void MotorController::init()
 {
 	enabled = true;
 
-	pwm->setDesiredFrequency(180);
+	pwm.setDesiredFrequency(180);
 
-	frontLeft = new Motor(*pwm, 0);
-	frontRight = new Motor(*pwm, 4);
-	rearRight = new Motor(*pwm, 8);
-	rearLeft = new Motor(*pwm, 12);
+	frontLeft = new Motor(pwm, 0);
+	frontRight = new Motor(pwm, 4);
+	rearRight = new Motor(pwm, 8);
+	rearLeft = new Motor(pwm, 12);
 
 	arm();
 	initialized = true;

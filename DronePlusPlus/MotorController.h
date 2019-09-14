@@ -5,7 +5,7 @@
 class MotorController
 {
 	int address;
-	PwmController* pwm;
+	PwmController pwm;
 
 	void init();
 	void arm();
@@ -24,7 +24,6 @@ class MotorController
 	double limitThrust(double thrust, double limit);
 public:
 	MotorController(int address = 0x40);
-	~MotorController();
 
 	Motor* frontLeft;
 	Motor* frontRight;
