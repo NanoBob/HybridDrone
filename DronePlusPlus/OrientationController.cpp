@@ -146,9 +146,12 @@ void OrientationController::handleAxisOffset(Axis axis, float offset)
 	switch (axis) {
 	case Axis::Yaw:
 		this->motors.yaw(std::min(targetPower, 0.1f));
+		break;
 	case Axis::Pitch:
 		this->motors.pitch(- targetPower);
+		break;
 	case Axis::Roll:
 		this->motors.roll(- targetPower);
+		break;
 	}
 }
