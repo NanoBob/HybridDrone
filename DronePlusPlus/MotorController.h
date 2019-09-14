@@ -18,7 +18,6 @@ class MotorController
 	double throttlePower;
 
 	bool enabled;
-	bool initialized;
 
 	double limitThrust(double thrust, double limit);
 public:
@@ -33,11 +32,9 @@ public:
 	void pitch(double value) { pitchPower = limitThrust(value, 0.3); }
 	void roll(double value) { rollPower = limitThrust(value, 0.3); }
 	void throttle(double value) { throttlePower = limitThrust(value, 0.3); }
-
 	void updateMotors();
 
 	void test(double value);
-	bool isInitialized() { return initialized; }
 
 	void shutdown();
 	void disable();

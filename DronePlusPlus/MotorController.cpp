@@ -5,7 +5,6 @@
 
 MotorController::MotorController(int address) :
 	pwm(address),
-	initialized(false),
 	enabled(true),
 	throttlePower(0),
 	yawPower(0),
@@ -20,7 +19,6 @@ MotorController::MotorController(int address) :
 	rearLeft = new Motor(pwm, 12);
 
 	arm();
-	initialized = true;
 }
 
 double MotorController::limitThrust(double thrust, double limit)
