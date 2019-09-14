@@ -6,7 +6,7 @@ GPIOPin::GPIOPin()
 {
 }
 
-GPIOPin::GPIOPin(string number) : number(number), state(GPIOPinState::DISABLED)
+GPIOPin::GPIOPin(string number) : state(GPIOPinState::DISABLED), number(number)
 {
 
 }

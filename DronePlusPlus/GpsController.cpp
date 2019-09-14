@@ -1,6 +1,9 @@
 #include "GpsController.h"
 
-GpsController::GpsController(): position(Position(0, 0)), sensorThread(nullptr), terminateSensorThread(false)
+GpsController::GpsController():
+	position(Position(0, 0)),
+	terminateSensorThread(false),
+	sensorThread(nullptr)
 {
 	this->sensor = new GpsSensor();
 }
