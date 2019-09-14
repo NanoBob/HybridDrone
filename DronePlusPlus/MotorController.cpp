@@ -12,7 +12,15 @@ MotorController::MotorController(int address) :
 	pitchPower(0),
 	rollPower(0)
 {
-	init();
+	pwm.setDesiredFrequency(180);
+
+	frontLeft = new Motor(pwm, 0);
+	frontRight = new Motor(pwm, 4);
+	rearRight = new Motor(pwm, 8);
+	rearLeft = new Motor(pwm, 12);
+
+	arm();
+	initialized = true;
 }
 
 double MotorController::limitThrust(double thrust, double limit)
@@ -50,21 +58,6 @@ void MotorController::test(double value)
 void MotorController::shutdown()
 {
 	stopAllMotors();
-}
-
-void MotorController::init()
-{
-	enabled = true;
-
-	pwm.setDesiredFrequency(180);
-
-	frontLeft = new Motor(pwm, 0);
-	frontRight = new Motor(pwm, 4);
-	rearRight = new Motor(pwm, 8);
-	rearLeft = new Motor(pwm, 12);
-
-	arm();
-	initialized = true;
 }
 
 void MotorController::arm()

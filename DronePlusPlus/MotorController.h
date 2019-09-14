@@ -7,7 +7,6 @@ class MotorController
 	int address;
 	PwmController pwm;
 
-	void init();
 	void arm();
 
 	void stopAllMotors();
