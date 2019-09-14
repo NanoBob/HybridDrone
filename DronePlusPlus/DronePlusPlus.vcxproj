@@ -83,11 +83,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" />
   <ItemGroup>
     <ClCompile Include="Gps.cpp" />
-    <ClCompile Include="GPIOPin.cpp" />
     <ClCompile Include="GpsController.cpp" />
     <ClCompile Include="GpsSensor.cpp" />
     <ClCompile Include="I2C.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Motor.cpp" />
     <ClCompile Include="MotorController.cpp" />
     <ClCompile Include="Orientation.cpp" />
@@ -100,8 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gps.h" />
-    <ClInclude Include="GPIOPin.h" />
-    <ClInclude Include="GPIOPinEnum.h" />
     <ClInclude Include="GpsController.h" />
     <ClInclude Include="GpsSensor.h" />
     <ClInclude Include="I2C.h" />

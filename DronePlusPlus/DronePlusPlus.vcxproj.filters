@@ -31,9 +31,6 @@
     <Filter Include="Libraries\Io">
       <UniqueIdentifier>{b995dd54-0019-496f-adb6-ca5d8b88e78f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Libraries\Io\GPIO">
-      <UniqueIdentifier>{8373168d-f75e-45ab-8739-e5a87df53d4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Libraries\Io\I2C">
       <UniqueIdentifier>{797f81ae-6321-4f16-a84a-12a9642947f9}</UniqueIdentifier>
     </Filter>
@@ -45,12 +42,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GPIOPin.h">
-      <Filter>Libraries\Io\GPIO</Filter>
-    </ClInclude>
-    <ClInclude Include="GPIOPinEnum.h">
-      <Filter>Libraries\Io\GPIO</Filter>
-    </ClInclude>
     <ClInclude Include="PwmController.h">
       <Filter>Libraries\PwmController</Filter>
     </ClInclude>
@@ -93,10 +84,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GPIOPin.cpp">
-      <Filter>Libraries\Io\GPIO</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="PwmController.cpp">
       <Filter>Libraries\PwmController</Filter>
     </ClCompile>
