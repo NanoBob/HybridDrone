@@ -8,65 +8,62 @@ OrientationController::OrientationController(std::shared_ptr<MotorController> mo
 	sensor(0x28),
 	orientation(0, 0, 0), 
 	targetOrientation(0, 0, 0), 
-	terminateSensorThread(false), 
 	motors(motors), 
 	orientationAssistAgression(1.0f/45.0f), 
 	readCount(0),
-	sensorThread(nullptr),
-	motorThread(nullptr)
+	terminateSensorThread(false),
+	terminateMotorThread(false)
 {
 }
 
 OrientationController::~OrientationController()
 {
 	terminateSensorThread = true;
-	if (sensorThread != nullptr) {
+	if (sensorThread) {
 		sensorThread->join();
-		delete sensorThread;
+		sensorThread.reset();
 	}
 }
 
 void OrientationController::start()
 {
-	if (sensorThread != nullptr) {
+	if (sensorThread) {
 		return;
 	}
 	terminateSensorThread = false;
 	isRunning = true;
-	sensorThread = new std::thread([this] { this->runOrientation(); });
+	sensorThread.reset(new std::thread([this] { this->runOrientation(); }));
 
 }
 
 void OrientationController::stop()
 {
-	if (sensorThread == nullptr) {
+	if (!sensorThread) {
 		return;
 	}
 	isRunning = false;
 	terminateSensorThread = true;
 	sensorThread->join();
-	delete sensorThread;
-	sensorThread = nullptr;
+	sensorThread.reset();
 }
 
 void OrientationController::startOrientationAssist()
 {
-	if (motorThread != nullptr) {
+	if (motorThread) {
 		return;
 	}
 	terminateMotorThread = false;
-	motorThread = new std::thread([this] { this->runMotors(); });
+	motorThread.reset(new std::thread([this] { this->runMotors(); }));
 }
 
 void OrientationController::stopOrientationAssit()
 {
-	if (motorThread == nullptr) {
+	if (!motorThread) {
 		return;
 	}
 	terminateMotorThread = true;
 	motorThread->join();
-	delete motorThread;
-	motorThread = nullptr;
+	motorThread.reset();
 }
 
 Orientation OrientationController::getOrientation()

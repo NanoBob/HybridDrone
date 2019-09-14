@@ -18,7 +18,7 @@ void motorTest() {
 
 void orientationTest() {
 	auto motorController = std::make_shared<MotorController>();
-	OrientationController controller = OrientationController(motorController);
+	OrientationController controller(motorController);
 	controller.start();
 }
 

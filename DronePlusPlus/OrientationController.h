@@ -26,10 +26,10 @@ private:
 	int readCount;
 
 	bool terminateSensorThread;
-	std::thread* sensorThread;
+	std::unique_ptr<std::thread> sensorThread;
 
 	bool terminateMotorThread;
-	std::thread* motorThread;
+	std::unique_ptr<std::thread> motorThread;
 
 	Orientation sanitizeOrientation(Orientation orientation);
 	void runOrientation();
