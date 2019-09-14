@@ -9,12 +9,11 @@ class OrientationSensor
 {
 private:
 	int address;
-	I2C* i2c;
+	I2C i2c;
 
 	void init();
 public:
 	OrientationSensor(int address);
-	~OrientationSensor();
 
 	Orientation getOrientation();
 };
