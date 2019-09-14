@@ -6,8 +6,8 @@
 class GpsSensor
 {
 private:
-	TinyGPSPlus* gps;
-	Uart* uart;
+	TinyGPSPlus gps;
+	Uart uart;
 public:
 	GpsSensor();
 
