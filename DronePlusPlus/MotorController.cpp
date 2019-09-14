@@ -1,6 +1,7 @@
 #include "MotorController.h"
-#include <iostream>
 
+#include <iostream>
+#include <unistd.h>
 
 MotorController::MotorController(int address): initialized(false), enabled(true), throttlePower(0), yawPower(0), pitchPower(0), rollPower(0)
 {

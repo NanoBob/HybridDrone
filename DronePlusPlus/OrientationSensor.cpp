@@ -1,5 +1,7 @@
 #include "OrientationSensor.h"
+
 #include <iostream>
+#include <unistd.h>
 
 OrientationSensor::OrientationSensor(int address): address(address)
 {

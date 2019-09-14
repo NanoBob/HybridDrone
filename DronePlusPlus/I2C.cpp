@@ -1,15 +1,19 @@
 #include "I2C.h"
+
 #include <iostream>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <linux/i2c.h>
+#include <linux/i2c-dev.h>
 
 using namespace std;
-
 
 I2C::I2C(int address = 0x40) : address(address)
 {
 	openBus();
 	acquireDevice();
 }
-
 
 I2C::~I2C()
 {
