@@ -96,7 +96,6 @@
     <ClCompile Include="GPIOPin.cpp">
       <Filter>Libraries\Io\GPIO</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="PwmController.cpp">
       <Filter>Libraries\PwmController</Filter>
     </ClCompile>

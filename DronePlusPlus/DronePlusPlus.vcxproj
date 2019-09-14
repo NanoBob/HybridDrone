@@ -87,7 +87,6 @@
     <ClCompile Include="GpsController.cpp" />
     <ClCompile Include="GpsSensor.cpp" />
     <ClCompile Include="I2C.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Motor.cpp" />
     <ClCompile Include="MotorController.cpp" />
     <ClCompile Include="Orientation.cpp" />
