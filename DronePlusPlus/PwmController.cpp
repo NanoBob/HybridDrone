@@ -1,17 +1,10 @@
 #include "PwmController.h"
 #include <cmath>
 
-
-
-PwmController::PwmController(int address)
+PwmController::PwmController(int address) :
+	i2c(address)
 {
-	i2c = new I2C(address);
 	init();
-}
-
-PwmController::~PwmController()
-{
-	delete i2c;
 }
 
 void PwmController::init()
@@ -21,23 +14,23 @@ void PwmController::init()
 
 void PwmController::reset()
 {
-	i2c->writeAddress((int)PwmRegisters::MODE1, 0x0);
+	i2c.writeAddress((int)PwmRegisters::MODE1, 0x0);
 }
 
 void PwmController::setPwm(uint8_t channel, uint16_t on, uint16_t off)
 {
-	i2c->writeAddress((int)PwmRegisters::LED0_ON_L + 4 * channel, (on & 0xff));
-	i2c->writeAddress((int)PwmRegisters::LED0_ON_H + 4 * channel, (on >> 8));
-	i2c->writeAddress((int)PwmRegisters::LED0_OFF_L + 4 * channel, (off & 0xff));
-	i2c->writeAddress((int)PwmRegisters::LED0_OFF_H + 4 * channel, (off >> 8));
+	i2c.writeAddress((int)PwmRegisters::LED0_ON_L + 4 * channel, (on & 0xff));
+	i2c.writeAddress((int)PwmRegisters::LED0_ON_H + 4 * channel, (on >> 8));
+	i2c.writeAddress((int)PwmRegisters::LED0_OFF_L + 4 * channel, (off & 0xff));
+	i2c.writeAddress((int)PwmRegisters::LED0_OFF_H + 4 * channel, (off >> 8));
 }
 
 void PwmController::setAllPwm(uint16_t on, uint16_t off)
 {
-	i2c->writeAddress((int)PwmRegisters::ALL_LED_ON_L, (on & 0xff));
-	i2c->writeAddress((int)PwmRegisters::ALL_LED_ON_H, (on >> 8));
-	i2c->writeAddress((int)PwmRegisters::ALL_LED_OFF_L, (off & 0xff));
-	i2c->writeAddress((int)PwmRegisters::ALL_LED_OFF_H, (off >> 8));
+	i2c.writeAddress((int)PwmRegisters::ALL_LED_ON_L, (on & 0xff));
+	i2c.writeAddress((int)PwmRegisters::ALL_LED_ON_H, (on >> 8));
+	i2c.writeAddress((int)PwmRegisters::ALL_LED_OFF_L, (off & 0xff));
+	i2c.writeAddress((int)PwmRegisters::ALL_LED_OFF_H, (off >> 8));
 }
 
 void PwmController::setPulseParameters(int pin, double dutyCycle, bool invertPolarity)
@@ -95,12 +88,12 @@ void PwmController::setDesiredFrequency(double frequency)
 
 	uint8_t prescale = (uint8_t)std::floor(prescaleval + 0.5f);
 
-	int oldMode= i2c->readAddress((int)PwmRegisters::MODE1);
+	int oldMode= i2c.readAddress((int)PwmRegisters::MODE1);
 	int newMode = (oldMode & 0x7f) | 0x10;
 
-	i2c->writeAddress((int)PwmRegisters::MODE1, newMode);
-	i2c->writeAddress((int)PwmRegisters::PRESCALE, prescale);
-	i2c->writeAddress((int)PwmRegisters::MODE1, oldMode);
+	i2c.writeAddress((int)PwmRegisters::MODE1, newMode);
+	i2c.writeAddress((int)PwmRegisters::PRESCALE, prescale);
+	i2c.writeAddress((int)PwmRegisters::MODE1, oldMode);
 
-	i2c->writeAddress((int)PwmRegisters::MODE1, oldMode | 0xa1);
+	i2c.writeAddress((int)PwmRegisters::MODE1, oldMode | 0xa1);
 }

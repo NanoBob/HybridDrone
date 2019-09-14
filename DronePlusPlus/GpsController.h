@@ -1,15 +1,18 @@
 #pragma once
+
+#include <memory>
 #include "GpsSensor.h"
 #include "Position.h"
+
 class GpsController
 {
 private:
-	GpsSensor* sensor;
+	GpsSensor sensor;
 
 	Position position;
 
 	bool terminateSensorThread;
-	std::thread* sensorThread;
+	std::unique_ptr<std::thread> sensorThread;
 
 	void runSensor();
 public:

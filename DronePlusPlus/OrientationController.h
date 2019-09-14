@@ -1,9 +1,11 @@
 #pragma once
+
 #include "Orientation.h"
-#include <thread>
 #include "OrientationSensor.h"
 #include "MotorController.h"
 
+#include <thread>
+#include <memory>
 
 enum class Axis {
 	Yaw, Pitch, Roll
@@ -13,8 +15,8 @@ class OrientationController
 {
 private:
 
-	OrientationSensor* sensor;
-	MotorController& motors;
+	OrientationSensor sensor;
+	std::shared_ptr<MotorController> motors;
 
 	Orientation orientation;
 	Orientation targetOrientation;
@@ -24,10 +26,10 @@ private:
 	int readCount;
 
 	bool terminateSensorThread;
-	std::thread* sensorThread;
+	std::unique_ptr<std::thread> sensorThread;
 
 	bool terminateMotorThread;
-	std::thread* motorThread;
+	std::unique_ptr<std::thread> motorThread;
 
 	Orientation sanitizeOrientation(Orientation orientation);
 	void runOrientation();
@@ -36,7 +38,7 @@ private:
 	void performStabilityAssist();
 	void handleAxisOffset(Axis axis, float offset);
 public:
-	OrientationController(MotorController& motors);
+	OrientationController(std::shared_ptr<MotorController> motors);
 	~OrientationController();
 
 	void start();

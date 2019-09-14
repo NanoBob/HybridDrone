@@ -1,16 +1,4 @@
 #pragma once
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
-#include <linux/i2c.h>
-#include <linux/i2c-dev.h>
-
-#include <string>
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
-
-#include <vector>
 
 class I2C
 {

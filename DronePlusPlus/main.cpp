@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <memory>
 #include "GPIOPin.h"
 #include "I2C.h"
 #include <ios>
@@ -16,8 +17,8 @@ void motorTest() {
 }
 
 void orientationTest() {
-	MotorController motorController = MotorController();
-	OrientationController controller = OrientationController(motorController);
+	auto motorController = std::make_shared<MotorController>();
+	OrientationController controller(motorController);
 	controller.start();
 }
 

@@ -1,5 +1,8 @@
 #pragma once
+
 #include "PwmController.h"
+
+#include <memory>
 
 class Motor
 {
@@ -10,12 +13,12 @@ private:
 	double speed;
 	bool running;
 
-	PwmController& pwm;
+	std::shared_ptr<PwmController> pwm;
 
 public:
 	int id;
 
-	Motor(PwmController& pwm, int id);
+	Motor(std::shared_ptr<PwmController> pwm, int id);
 	~Motor();
 
 	void run(double speed);

@@ -5,7 +5,7 @@ class PwmController
 {
 private:
 	int address;
-	I2C* i2c;
+	I2C i2c;
 
 	void init();
 	void reset();
@@ -15,7 +15,6 @@ private:
 
 public:
 	PwmController(int address);
-	~PwmController();
 
 	void setPulseParameters(int pin, double dutyCycle, bool invertPolarity = false);
 	void setDesiredFrequency(double frequency);

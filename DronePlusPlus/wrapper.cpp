@@ -3,19 +3,20 @@
 
 #include <chrono>
 #include <thread>
+#include <memory>
 
 #include "MotorController.h"
 #include "OrientationController.h"
 #include "GpsController.h"
 
-MotorController* motorController;
+std::shared_ptr<MotorController> motorController;
 OrientationController* orientationController;
 GpsController* gpsController;
 
 extern "C" void init() {
 	gpsController = new GpsController();
-	motorController = new MotorController();
-	orientationController = new OrientationController(*motorController);
+	motorController = std::make_shared<MotorController>();
+	orientationController = new OrientationController(motorController);
 }
 
 // motors
@@ -37,11 +38,11 @@ extern "C" void setThrottle(float value) {
 }
 
 extern "C" void getMotorThrottles(float& frontLeft, float& frontRight, float& rearLeft, float& rearRight) {
-	if (motorController != nullptr && motorController->isInitialized()) {
-		frontLeft = motorController->frontLeft->getSpeed();
-		frontRight = motorController->frontRight->getSpeed();
-		rearLeft = motorController->rearLeft->getSpeed();
-		rearRight = motorController->rearRight->getSpeed();
+	if (motorController != nullptr) {
+		frontLeft = motorController->frontLeft.getSpeed();
+		frontRight = motorController->frontRight.getSpeed();
+		rearLeft = motorController->rearLeft.getSpeed();
+		rearRight = motorController->rearRight.getSpeed();
 	}
 }
 
