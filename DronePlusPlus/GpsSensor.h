@@ -1,7 +1,8 @@
 #pragma once
-#include <string>
+
 #include "Gps.h"
 #include "Uart.h"
+
 class GpsSensor
 {
 private:
