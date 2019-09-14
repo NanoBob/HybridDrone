@@ -4,7 +4,7 @@
 class GpsController
 {
 private:
-	GpsSensor* sensor;
+	GpsSensor sensor;
 
 	Position position;
 

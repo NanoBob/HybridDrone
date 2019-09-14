@@ -2,7 +2,6 @@
 
 GpsController::GpsController(): position(Position(0, 0)), sensorThread(nullptr), terminateSensorThread(false)
 {
-	this->sensor = new GpsSensor();
 }
 
 void GpsController::start()
@@ -34,9 +33,9 @@ Position GpsController::getPosition()
 void GpsController::runSensor()
 {
 	while (!terminateSensorThread) {
-		this->sensor->measure();
+		this->sensor.measure();
 
-		this->position = Position(this->sensor->longitude, this->sensor->latitude);
+		this->position = Position(this->sensor.longitude, this->sensor.latitude);
 
 		usleep(1e6);
 	}
