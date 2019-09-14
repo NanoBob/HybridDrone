@@ -111,7 +111,7 @@ int I2C::readAddress(int address, unsigned char* buffer, int length)
 	return bytesRead;
 }
 
-int I2C::writeAddress(int address, int data)
+void I2C::writeAddress(int address, int data)
 {
 	unsigned char buffer[2] = {
 		address,

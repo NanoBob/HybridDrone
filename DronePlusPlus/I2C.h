@@ -27,7 +27,7 @@ public:
 
 	int readAddress(int address);
 	int readAddress(int address, unsigned char* buffer, int length);
-	int writeAddress(int address, int data);
+	void writeAddress(int address, int data);
 
 	int readBytes(unsigned char* buffer, int length);
 	void writeBytes(unsigned char* bytes, int count);
