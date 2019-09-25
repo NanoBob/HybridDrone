@@ -90,14 +90,14 @@ void I2C::acquireDevice()
 //	writeBytes(buffer, 2);
 //}
 
-int I2C::readAddress(int address)
+int I2C::readAddress(unsigned char address)
 {
 	unsigned char buffer[1] = { 0 };
 	readAddress(address, buffer, 1);
 	return buffer[0];
 }
 
-int I2C::readAddress(int address, unsigned char* buffer, int length)
+int I2C::readAddress(unsigned char address, unsigned char* buffer, int length)
 {
 	unsigned char writeBuffer[1] = {
 		address,
@@ -111,7 +111,7 @@ int I2C::readAddress(int address, unsigned char* buffer, int length)
 	return bytesRead;
 }
 
-int I2C::writeAddress(int address, int data)
+void I2C::writeAddress(unsigned char address, unsigned char data)
 {
 	unsigned char buffer[2] = {
 		address,

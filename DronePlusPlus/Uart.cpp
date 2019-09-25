@@ -28,22 +28,15 @@ void Uart::readBytes(unsigned char* buffer, int length)
 
 unsigned char Uart::readByte()
 {
-	if (uart0_filestream != -1)
-	{
-		unsigned char rx_buffer[2];
-		int rx_length = read(uart0_filestream, (void*)rx_buffer, 1);
-		if (rx_length < 0)
-		{
-			
-		}
-		else if (rx_length == 0)
-		{
-			
-		}
-		else
-		{
-			rx_buffer[rx_length] = '\0';
-			return rx_buffer[0];
-		}
-	}
+	if (uart0_filestream == -1)
+		return 0;
+
+	unsigned char rx_buffer[2];
+	int rx_length = read(uart0_filestream, (void*)rx_buffer, 1);
+
+	if (rx_length <= 0)
+		return 0;
+
+	rx_buffer[rx_length] = '\0';
+	return rx_buffer[0];
 }

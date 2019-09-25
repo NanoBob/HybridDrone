@@ -2,7 +2,13 @@
 #include <iostream>
 
 
-MotorController::MotorController(int address): initialized(false), enabled(true), throttlePower(0), yawPower(0), pitchPower(0), rollPower(0)
+MotorController::MotorController(int address) :
+	yawPower(0),
+	pitchPower(0),
+	rollPower(0),
+	throttlePower(0),
+	enabled(true),
+	initialized(false)
 {
 	pwm = new PwmController(address);
 
