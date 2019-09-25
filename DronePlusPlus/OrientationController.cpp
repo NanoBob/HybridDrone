@@ -2,14 +2,15 @@
 #include <iostream>
 
 OrientationController::OrientationController(MotorController& motors) : 
-	isRunning(false), 
+	motors(motors),
 	orientation(0, 0, 0), 
 	targetOrientation(0, 0, 0), 
-	terminateSensorThread(false), 
-	motors(motors), 
+	isRunning(false),
 	orientationAssistAgression(1.0f/45.0f), 
 	readCount(0),
+	terminateSensorThread(false),
 	sensorThread(nullptr),
+	terminateMotorThread(false),
 	motorThread(nullptr)
 {
 	sensor = new OrientationSensor(0x28);
@@ -145,9 +146,12 @@ void OrientationController::handleAxisOffset(Axis axis, float offset)
 	switch (axis) {
 	case Axis::Yaw:
 		this->motors.yaw(std::min(targetPower, 0.1f));
+		break;
 	case Axis::Pitch:
 		this->motors.pitch(- targetPower);
+		break;
 	case Axis::Roll:
 		this->motors.roll(- targetPower);
+		break;
 	}
 }

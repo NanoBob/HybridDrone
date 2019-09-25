@@ -50,7 +50,6 @@ void GpsSensor::displayInfo()
 		int hour = gps->time.hour();
 		int minute = gps->time.minute();
 		int second = gps->time.second();
-		int centiSecond = gps->time.centisecond();
 
 		std::string timeString =
 			(hour < 10 ? "0" + std::to_string(hour) : std::to_string(hour)) + ":" +
