@@ -38,11 +38,11 @@ void MotorController::test(double value)
 {
 	for (float i = 0; i < value; i += value * .0004) {
 		this->throttle(i);
-		usleep(25);
+		usleep(12500);
 	}
 	for (float i = value; i >= 0; i -= value * .0004) {
 		this->throttle(i);
-		usleep(25);
+		usleep(12500);
 	}
 }
 
