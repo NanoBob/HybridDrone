@@ -109,7 +109,7 @@ void OrientationController::runOrientation() {
 	while (!terminateSensorThread) {
 		Orientation orientation = sensor->getOrientation();
 
-		this->orientation =  sanitizeOrientation(orientation);
+		this->orientation = sanitizeOrientation(orientation);
 		this->readCount = (this->readCount + 1) % 1024;
 
 		usleep(10 * 1000);

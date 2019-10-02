@@ -30,7 +30,7 @@ namespace Drone.Core
                 drone.Init();
                 drone.StartOrientationThread();
 
-                webserver.AddAuthorizationMethod(new TimeBasedHmacAuthorizationHandler("mySecret", new TimeSpan(0, 0, 3), 1));
+                webserver.AddAuthorizationMethod(new TimeBasedHmacAuthorizationHandler("mySecret", new TimeSpan(0, 0, 3), 2));
                 webserver.Start();
             } catch (Exception exception)
             {

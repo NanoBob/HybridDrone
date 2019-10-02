@@ -34,7 +34,7 @@ public:
 	void yaw(double value) { yawPower = limitThrust(value, 0.3); }
 	void pitch(double value) { pitchPower = limitThrust(value, 0.3); }
 	void roll(double value) { rollPower = limitThrust(value, 0.3); }
-	void throttle(double value) { throttlePower = limitThrust(value, 0.3); updateMotors(); }
+	void throttle(double value) { throttlePower = limitThrust(value, 0.7); updateMotors(); }
 
 	void updateMotors();
 

@@ -69,6 +69,26 @@ namespace Drone.Core.Controllers
                     message = "Motor test started"
                 };
             });
+
+            webserver.AddAction("POST", BaseRoute + "/setSpeed", (context) =>
+            {
+                string input;
+                using (StreamReader reader = new StreamReader(context.Request.InputStream))
+                {
+                    input = reader.ReadToEnd();
+                }
+
+                float value = JsonConvert.DeserializeObject<RunTestStruct>(input).Value;
+                _ = Task.Run(() =>
+                {
+                    drone.MotorThrottle = value;
+                });
+
+                return new
+                {
+                    message = "Motor throttle set"
+                };
+            });
         }
     }
 
